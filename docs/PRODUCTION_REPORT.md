@@ -1,9 +1,9 @@
 # Production report — The Boy Who Wanted to Fly
 
 ## What was produced
-A complete 12-minute animated storybook film of Jason Whitewolf's story: all 17 manuscript scenes in order, an opening title card, and closing credits.
+A complete 12-minute-13-second animated storybook film of Jason Whitewolf's story: all 17 manuscript scenes in order, an opening title card, and closing credits.
 
-- **File:** `The_Boy_Who_Wanted_to_Fly.mp4` (GitHub Release `v1.0`)
+- **Files:** `The_Boy_Who_Wanted_to_Fly.mp4` (1080p, 352 MB) and `The_Boy_Who_Wanted_to_Fly_720p.mp4`, delivered in the production session (GitHub Releases were not permitted from this session; the repo rebuilds both exactly)
 - **Format:** 1920×1080, 24 fps, H.264 (CRF 18), AAC 192 kb/s stereo, loudness-normalized to −16 LUFS, soft English subtitles
 - **Also produced:** character reference sheet, full reproducible source pipeline, adaptation notes, license record
 

@@ -6,9 +6,9 @@ Orion wants to fly. Cardboard wings, chicken feathers and a very tall ladder don
 
 ## ▶ Watch the film
 
-**`The_Boy_Who_Wanted_to_Fly.mp4`** — attached to the latest [GitHub Release](../../releases) (the file is too large for normal git storage).
+**`The_Boy_Who_Wanted_to_Fly.mp4`** (352 MB, 1080p) and a phone-friendly **`The_Boy_Who_Wanted_to_Fly_720p.mp4`** were delivered directly in the Claude production session. The files are too large for ordinary git storage and this session could not create GitHub Releases, so they are not committed here — attach them to a Release yourself, or rebuild them exactly with the steps below.
 
-- 1920×1080, 24 fps, H.264 video, AAC stereo audio, ~12½ minutes
+- 1920×1080, 24 fps, H.264 video, AAC stereo audio, 12 minutes 13 seconds
 - All 17 manuscript scenes, opening title, closing credits
 - Soft English subtitles included (turn on captions in your player)
 
