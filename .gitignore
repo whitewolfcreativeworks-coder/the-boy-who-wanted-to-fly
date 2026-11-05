@@ -4,3 +4,6 @@ models/
 !audio/narration/.keep
 __pycache__/
 *.mp4
+# Version 2 renders and caches
+v2/build/
+v2/**/__pycache__/
