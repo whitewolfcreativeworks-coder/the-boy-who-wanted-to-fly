@@ -1,0 +1,6 @@
+build/
+models/
+*.wav
+!audio/narration/.keep
+__pycache__/
+*.mp4
