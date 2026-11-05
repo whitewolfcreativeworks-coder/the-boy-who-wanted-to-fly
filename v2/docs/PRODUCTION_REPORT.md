@@ -2,7 +2,7 @@
 
 *Overnight session, 5 Nov 2026. Branch `version-2-cinematic` (Version 1 untouched on `main`, tag `v1.0-final` → `65a6ba4`).*
 
-**Bottom line:** Version 2 is at its **quality gate**, not finished. A real 3D pipeline is built and proven: a rigged, dimensional Orion in a lit, dimensional autumn yard, animated and rendered with depth of field and atmosphere. It produced a ~8-second test reel of two Scene 2 shots. **The full 17-scene film was not rendered.** The machine has no GPU, and at this quality a full render would take about 11 days of CPU time (§7).
+**Bottom line:** Version 2 is at its **quality gate**, not finished. A real 3D pipeline is built and proven: a rigged, dimensional Orion in a lit, dimensional autumn yard, animated and rendered with depth of field and atmosphere. It produced a 7.5-second test reel of two Scene 2 shots. **The full 17-scene film was not rendered.** The machine has no GPU, and at this quality a full render would take about 11 days of CPU time (§7).
 
 ## 1. Pipeline chosen
 **Blender 5.2.3 (Cycles) driven entirely from Python.**
@@ -60,6 +60,7 @@ On one consumer GPU, the same `.blend` files render roughly 20–50× faster. Th
 **Quality**
 - The look is closer to good TV or game-cinematic CG than to a feature film.
 - The sky overexposes to near-white. The house is a simple box with no trim, siding or gutters.
+- **The close-up (shot B) is the weakest moment:** Orion's face is stiff and mannequin-like, and his shoulders and torso read too broad for a young child. A character modeller's sculpt and a face rig are the fix.
 - The hair is a sculpted cap: it reads at a distance, but looks helmet-like up close.
 - There is no blinking, no facial animation and no lip-sync yet.
 - The run, flap and sit animations are procedural cycles, not hand-keyed performance. They read clearly but lack the weight and nuance of feature work.
@@ -70,6 +71,15 @@ On one consumer GPU, the same `.blend` files render roughly 20–50× faster. Th
 
 **Delivery**
 - The branch couldn't be pushed from this session. GitHub access was read-only, so the branch is delivered as a git bundle.
+
+## Style exploration (after the test)
+After the test reel, the same frame was re-rendered in four looks to choose a direction (`v2/review/style_test_options.jpg`):
+- current;
+- cinematic lighting (painted sky with clouds, `style_test.py --style cinema`);
+- painterly post filter (`paint_post.py`);
+- ink lines and cel shading (`style_test.py --style toon` + `toon_post.py`).
+
+The ink/cel look is the strongest on this hardware: it hides the simple modelling and costs no more to render. The painterly filter is weak, and real painted styling needs a GPU AI restyle. EEVEE runs out of memory here, so the cel look is built from Cycles render passes plus a post step.
 
 ## 10. Next iteration
 1. **Get a GPU.** Your own machine, or free Kaggle/Colab sessions under your account. This is the single change that makes the full film possible.
