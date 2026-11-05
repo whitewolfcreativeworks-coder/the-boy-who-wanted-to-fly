@@ -26,7 +26,7 @@ def main():
          "-metadata", "title=The Boy Who Wanted to Fly", "-metadata", "artist=Story by Jason Whitewolf",
          "-metadata", "copyright=© 2018 Jason Whitewolf. All rights reserved.",
          "-metadata:s:s:0", "language=eng", "-metadata:s:a:0", "language=eng",
-         "-movflags", "+faststart", "-shortest", out])
+         "-movflags", "+faststart", out])
     print(out)
 
 if __name__ == "__main__":
