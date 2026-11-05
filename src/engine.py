@@ -168,16 +168,32 @@ def cam_path(t, keys):
     k = keys[-1]; return Cam(k[1], k[2], k[3], k[4] if len(k) > 4 else 0)
 
 # ------------------------------------------------------------------ post FX
-def vignette(c, strength=0.45, color="#1a0d20"):
-    c.drawPaint(paint(shader=rad((W / 2, H / 2), W * 0.75,
-        [(*rgb(color), 0), (*rgb(color), 0), (*rgb(color), int(255 * strength))], [0, 0.55, 1.0])))
+_GRAIN = {}
+def _grain_img(k, a):
+    key = (k, round(a, 3))
+    if key not in _GRAIN:
+        s = skia.Surface(W // 2, H // 2); g = s.getCanvas(); g.clear(skia.ColorTRANSPARENT)
+        rnd = random.Random(k)
+        for _ in range(90):
+            x, y = rnd.uniform(0, W / 2), rnd.uniform(0, H / 2)
+            g.drawCircle(x, y, rnd.uniform(20, 80), paint("#fff8e8" if rnd.random() < .5 else "#4a3020", a=a * rnd.uniform(.2, 1), blur=25))
+        _GRAIN[key] = s.makeImageSnapshot()
+    return _GRAIN[key]
 
 def paper_grain(c, t, a=0.05):
-    """Subtle drifting paper texture so flat vector art reads as illustration."""
-    rnd = random.Random(int(t * 6))
-    for _ in range(90):
-        x, y = rnd.uniform(0, W), rnd.uniform(0, H)
-        c.drawCircle(x, y, rnd.uniform(40, 160), paint("#fff8e8" if rnd.random() < .5 else "#4a3020", a=a * rnd.uniform(.2, 1), blur=50))
+    """Subtle drifting paper texture so flat vector art reads as illustration (cached)."""
+    c.drawImageRect(_grain_img(int(t * 6) % 8, a), skia.Rect.MakeWH(W, H), skia.SamplingOptions(skia.FilterMode.kLinear))
+
+_VIG = {}
+def vignette(c, strength=0.45, color="#1a0d20"):
+    key = (round(strength, 3), color)
+    if key not in _VIG:
+        s = skia.Surface(W // 2, H // 2); g = s.getCanvas(); g.clear(skia.ColorTRANSPARENT)
+        g.scale(.5, .5)
+        g.drawPaint(paint(shader=rad((W / 2, H / 2), W * 0.75,
+            [(*rgb(color), 0), (*rgb(color), 0), (*rgb(color), int(255 * strength))], [0, 0.55, 1.0])))
+        _VIG[key] = s.makeImageSnapshot()
+    c.drawImageRect(_VIG[key], skia.Rect.MakeWH(W, H), skia.SamplingOptions(skia.FilterMode.kLinear))
 
 def fade(c, a, color="#000000"):
     if a > 0.001: c.drawPaint(paint(color, a=clamp(a)))
