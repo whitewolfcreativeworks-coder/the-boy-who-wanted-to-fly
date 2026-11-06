@@ -172,9 +172,9 @@ SHOTS = [
         "soft silver moonlight, peaceful.", dream=True)),
     # ---- 10  Running Through Honey
     dict(id="s10a", p=1, beats=["wind", "tap"], prompt=P(
-        "Night, windy: a bare twisting maple branch taps against a child's bedroom window, autumn leaves "
-        "whirling past in the wind, moonlight, the warm glow of a night light on the windowsill inside, moody and "
-        "magical. An empty view of the window only, no people or characters in the picture.")),
+        "Close-up seen from outside a house at night: a bare twisting maple branch with a few last red leaves "
+        "scrapes and taps against a dark glass windowpane, warm golden night-light glow behind lace curtains, "
+        "a full moon, autumn leaves whirling in the howling wind, moody and magical.")),
     dict(id="s10b", p=1, beats=["dreamrun", "honey"], prompt=P(
         f"A dream: {ORION}, {PAJAMAS}, tries to run through a strange golden landscape flooded with thick "
         "glistening amber honey up to his knees, straining with every slow step, arms flapping, honey "
