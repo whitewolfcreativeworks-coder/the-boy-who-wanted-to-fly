@@ -112,8 +112,9 @@ SHOTS = [
         "with syrup and butter, cheeks puffed, eating fast and impatient, glancing at the back door, sunlight "
         "through the window.")),
     dict(id="s04e", p=2, beats=["leap"], prompt=P(
-        f"{ORION}, {DAY_CLOTHES}, leaps up from the kitchen table so excited that his wooden chair tips "
-        "backward behind him, a funny moment, bright morning kitchen.")),
+        f"Bright morning kitchen: {ORION}, {DAY_CLOTHES}, springs up excitedly from his wooden chair at the "
+        "breakfast table, both feet on the floor, already turning toward the back door, while the chair tips "
+        "backward behind him, an empty plate of pancakes on the table, a funny moment.")),
     # ---- 5  Feathers from the Coop
     dict(id="s05a", p=1, beats=["coop", "silly"], prompt=P(
         f"A rustic backyard chicken coop with straw and a little wooden henhouse in dappled morning sunlight: "
