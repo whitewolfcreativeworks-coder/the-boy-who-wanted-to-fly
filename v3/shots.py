@@ -71,7 +71,7 @@ SHOTS = [
         f"forkful of spaghetti from a big plate of spaghetti and meatballs, {MOM} and {DAD} smiling at him.")),
     # ---- 3  A Room Full of Flying Things
     dict(id="s03a", p=1, beats=["dishes"], prompt=P(
-        f"In a warm family kitchen at night, {ORION} stands on a step stool at the sink drying a plate with a "
+        f"In a warm family kitchen at night, {ORION}, {DAY_CLOTHES}, stands on a step stool at the sink drying a plate with a "
         f"towel, {MOM} washing dishes with soap bubbles and {DAD} putting plates away, all laughing together.")),
     dict(id="s03b", p=2, beats=["stairs"], prompt=P(
         f"{ORION}, {DAY_CLOTHES}, climbs a carpeted staircase in a cozy house at night with a hopeful smile, "
