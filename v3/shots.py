@@ -53,8 +53,9 @@ SHOTS = [
         f"a small window: {ORION}, {DAY_CLOTHES}, holds up a flattened cardboard box with a bright excited "
         "idea on his face, a roll of tape and scissors on the workbench.")),
     dict(id="s01d", p=2, beats=["build"], prompt=P(
-        "Close-up of a small boy's hands carefully cutting a big wing shape out of cardboard with scissors on a "
-        "wooden workbench, pencil lines, scraps of cardboard and a roll of tape, warm sunbeam, shallow depth of field.")),
+        "Top-down view looking straight down at a wooden workbench: only a small boy's hands and the cuffs of "
+        "his orange and cream striped sleeves are visible, carefully cutting a big wing shape out of cardboard "
+        "with scissors, pencil lines, cardboard scraps and a roll of tape, warm sunbeam, shallow depth of field.")),
     dict(id="s01e", p=1, beats=["build"], prompt=P(
         f"In a warm cluttered garage, {ORION}, {DAY_CLOTHES}, proudly holds his arms out wide to show off "
         f"{WINGS}, beaming with pride, sunlight streaming through the open garage door behind him.")),
