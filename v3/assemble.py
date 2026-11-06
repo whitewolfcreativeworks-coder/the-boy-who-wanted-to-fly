@@ -32,16 +32,22 @@ for i, c in enumerate(clips):
     if nxt is not None and abs(total - nxt) > 0.1:
         print(f"warning: drift after scene {i}: video {total:.2f}s vs audio {nxt:.2f}s")
 
-lst = os.path.join(B, "v3", "concat.txt")
-with open(lst, "w") as f:
-    for c in clips:
-        f.write(f"file '{c}'\n")
-subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", lst,
+# Join losslessly via MPEG-TS (the mp4 concat demuxer drops frames at clip boundaries).
+tsdir = os.path.join(B, "v3", "ts"); os.makedirs(tsdir, exist_ok=True)
+ts = []
+for c in clips:
+    t = os.path.join(tsdir, os.path.basename(c)[:-4] + ".ts")
+    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", c, "-c", "copy", "-bsf:v", "h264_mp4toannexb",
+                    "-f", "mpegts", t], check=True)
+    ts.append(t)
+joined = os.path.join(B, "v3", "joined.mp4")
+subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", "concat:" + "|".join(ts), "-c", "copy", joined], check=True)
+subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", joined,
                 "-i", os.path.join(B, "audio", "mix.wav"), "-i", os.path.join(B, "film.srt"),
                 "-map", "0:v", "-map", "1:a", "-map", "2:s", "-c:v", "copy",
                 "-af", "loudnorm=I=-16:TP=-1.5:LRA=11", "-c:a", "aac", "-b:a", "192k", "-ar", "48000",
                 "-c:s", "mov_text", "-metadata:s:s:0", "language=eng",
                 "-metadata", "title=The Boy Who Wanted to Fly",
                 "-metadata", "artist=Story by Jason Whitewolf",
-                "-movflags", "+faststart", "-shortest", a.out], check=True)
+                "-movflags", "+faststart", a.out], check=True)
 print(f"{a.out}  {dur(a.out) / 60:.2f} min")
