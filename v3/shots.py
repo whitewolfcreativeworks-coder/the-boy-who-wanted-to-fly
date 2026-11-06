@@ -68,7 +68,7 @@ SHOTS = [
         f"{ORION}, {DAY_CLOTHES}, sits tired on the autumn grass with his cardboard wings lying beside him, "
         "watching the golden sun set low on the horizon, his face lit warm gold, a V-shaped flock of geese "
         "crossing the orange sky, peaceful and a little wistful.")),
-    dict(id="s02d", p=2, beats=["scent"], prompt=P(
+    dict(id="s02d", p=2, beats=["scent"], prompt=ENV(
         "Wide golden-hour view over autumn rooftops of a cozy neighborhood at sunset, wisps of wood smoke from "
         "a chimney, maple leaves drifting in the breeze, pumpkins and a basket of red apples on a porch.")),
     dict(id="s02e", p=1, beats=["call"], prompt=P(
@@ -119,7 +119,7 @@ SHOTS = [
         f"A rustic backyard chicken coop with straw and a little wooden henhouse in dappled morning sunlight: "
         f"{ORION}, {DAY_CLOTHES}, tiptoes among clucking brown and white chickens, picking up a feather and "
         "laughing.")),
-    dict(id="s05b", p=2, beats=["peck"], prompt=P(
+    dict(id="s05b", p=2, beats=["peck"], prompt=ENV(
         "Low angle close-up in a chicken coop: a mischievous fluffy brown hen with a cheeky expression pecks "
         "at the toe of a small red canvas sneaker, straw and feathers around, comedic.")),
     dict(id="s05c", p=1, beats=["tape", "work"], prompt=P(
