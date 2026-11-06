@@ -160,7 +160,7 @@ def warp(img, d, cam, u, t):
     breathe = 1 + 0.0025 * math.sin(t * 2.1) * np.clip(d - 0.55, 0, None)      # subtle life in near subjects
     sx = gx / (s * breathe) + px - tx * near
     sy = gy / (s * breathe) + py - ty * near - by
-    mapx = sx * W + W / 2; mapy = sy * W + H / 2
+    mapx = (sx * W + W / 2).astype(np.float32); mapy = (sy * W + H / 2).astype(np.float32)
     return cv2.remap(img, mapx, mapy, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT)
 
 
