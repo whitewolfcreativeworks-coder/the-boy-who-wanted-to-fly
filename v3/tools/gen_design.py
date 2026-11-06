@@ -61,7 +61,7 @@ for pid in a.ids or list(PROMPTS):
                "--vae", os.path.join(a.models, "ae.safetensors"),
                "--llm", os.path.join(a.models, "Qwen3-4B-Instruct-2507-Q4_K_M.gguf"),
                "-p", prompt, "--cfg-scale", "1.0", "--steps", str(a.steps), "-W", w, "-H", h,
-               "-s", seed, "-t", str(a.threads), "--vae-tiling", "-o", out]
+               "-s", seed, "-t", str(a.threads), "--vae-tiling", "--mmap", "-o", out]
         t = time.time()
         r = subprocess.run(cmd, capture_output=True, text=True)
         print(f"{pid} seed {seed}: {'ok' if r.returncode == 0 else 'FAILED'} {time.time() - t:.0f}s", flush=True)
