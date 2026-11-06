@@ -4,3 +4,4 @@ models/
 !audio/narration/.keep
 __pycache__/
 *.mp4
+/build
