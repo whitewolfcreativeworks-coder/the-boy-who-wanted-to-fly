@@ -239,13 +239,13 @@ SHOTS = [
         "Close-up in a starry dream sky: a pair of small red canvas sneakers with loose untied laces slipping "
         "off a flying boy's feet, the laces fluttering in the rushing wind, his pajama legs and red cape "
         "visible, magical starlight.", dream=True)),
-    dict(id="s16b", p=1, beats=["laces"], prompt=P(
+    dict(id="s16b", p=1, beats=["laces"], prompt=ENV(
         "A pair of small red canvas sneakers tumbling down through a soft dawn sky toward a quiet suburban "
-        "street far below, laces streaming, pink and gold sunrise.", dream=True)),
-    dict(id="s16c", p=1, beats=["wire", "why"], prompt=P(
+        "street far below, laces streaming, pink and gold sunrise, dreamy soft glow.")),
+    dict(id="s16c", p=1, beats=["wire", "why"], prompt=ENV(
         f"Early morning: a pair of small red canvas sneakers tied together by the laces hangs from a telephone "
         f"wire above a quiet autumn street in front of {HOUSE}, soft pink dawn light, maple leaves drifting.")),
-    dict(id="s16d", p=2, beats=["why"], prompt=P(
+    dict(id="s16d", p=2, beats=["why"], prompt=ENV(
         "Wide view down a long leafy autumn street at sunrise with wooden telephone poles, several pairs of "
         "different kids' sneakers hanging from the telephone wires all along the street, magical and "
         "whimsical, soft golden light.")),
