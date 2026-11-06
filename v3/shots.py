@@ -63,8 +63,9 @@ SHOTS = [
         "Wide golden-hour view over autumn rooftops of a cozy neighborhood at sunset, wisps of wood smoke from "
         "a chimney, maple leaves drifting in the breeze, pumpkins and a basket of red apples on a porch.")),
     dict(id="s02e", p=1, beats=["call"], prompt=P(
-        f"At sunset, {MOM} stands in the open red front door of {HOUSE}, warm light glowing from inside, "
-        "cupping one hand to her mouth to call her son in for dinner, smiling.")),
+        f"At sunset, {MOM} stands alone in the open red front door of {HOUSE}, warm light glowing from "
+        "inside, cupping one hand beside her mouth and calling out across the empty front yard, smiling. "
+        "She is the only person in the picture.")),
     dict(id="s02f", p=1, beats=["dinner"], prompt=P(
         f"A cozy family kitchen table in the evening, warm lamp light: {ORION}, {DAY_CLOTHES}, happily twirls a "
         f"forkful of spaghetti from a big plate of spaghetti and meatballs, {MOM} and {DAD} smiling at him.")),
