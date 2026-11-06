@@ -92,8 +92,8 @@ SHOTS = [
         f"{ORION}, {PAJAMAS}, brushes his teeth at a small bathroom sink, standing on a step stool, foam on his "
         "lips, sleepy and cute, warm night lighting.")),
     dict(id="s03e", p=1, beats=["bed", "sleep"], prompt=P(
-        f"{ORION}, {PAJAMAS}, sleeps snuggled under a thick soft quilt in a cozy bed in the corner of his "
-        "bedroom, a peaceful smile on his face, soft blue moonlight from the window, posters of airplanes and "
+        f"{ORION}, {PAJAMAS}, is fast asleep with his eyes gently closed, snuggled under a thick soft quilt in a cozy bed in the corner of his "
+        "bedroom, a peaceful smile on his sleeping face, soft blue moonlight from the window, posters of airplanes and "
         "birds on the walls.")),
     # ---- 4  Blueberry Pancakes
     dict(id="s04a", p=1, beats=["wake", "idea"], prompt=P(
