@@ -21,10 +21,19 @@ from edit import PLAN
 
 W, H, FPS = 1920, 1080, 24
 BUILD = os.path.join(ROOT, "build", "v3")
-KEYS = os.environ.get("V3_KEYFRAMES", os.path.join(BUILD, "keyframes"))
+KEYS = os.environ.get("V3_KEYFRAMES", os.path.join(HERE, "keyframes"))
 DEPTH_MODEL = os.environ.get("V3_DEPTH_MODEL", os.path.expanduser("~/models/depth_anything_v2_small.onnx"))
 XFADE = 0.7        # cross-dissolve between shots (s)
 DIP = 0.45         # dip to black at scene edges (s)
+
+
+def key_path(k):
+    """Key image for shot k: PNG (fresh from the generator) or JPEG (as stored in the repo)."""
+    for ext in (".png", ".jpg"):
+        p = os.path.join(KEYS, k + ext)
+        if os.path.exists(p):
+            return p
+    return None
 
 
 # ------------------------------------------------------------------ timing
@@ -55,7 +64,7 @@ def at_time(ctx, spec):
 def scene_shots(sid, ctx):
     """[(shot_id, start, end, cam, fx)] for shots whose key image exists."""
     rows = [(sid_, at_time(ctx, spec), cam, fx) for sid_, spec, cam, fx in PLAN[sid]
-            if os.path.exists(os.path.join(KEYS, sid_ + ".png"))]
+            if key_path(sid_)]
     if not rows:
         return []
     rows[0] = (rows[0][0], 0.0, rows[0][2], rows[0][3])
@@ -88,12 +97,12 @@ def depth_map(img):
 def load_shot(k):
     """Upscaled image (float32 BGR 0..1) and smoothed depth (1 = near), cached."""
     cache = os.path.join(BUILD, "cache"); os.makedirs(cache, exist_ok=True)
-    src = cv2.imread(os.path.join(KEYS, k + ".png"))
+    src = cv2.imread(key_path(k))
     img = cv2.resize(src, (W, H), interpolation=cv2.INTER_LANCZOS4)
     blur = cv2.GaussianBlur(img, (0, 0), 1.2)
     img = cv2.addWeighted(img, 1.35, blur, -0.35, 0)            # gentle sharpen after upscale
     dp = os.path.join(cache, k + "_depth.npy")
-    if os.path.exists(dp) and os.path.getmtime(dp) > os.path.getmtime(os.path.join(KEYS, k + ".png")):
+    if os.path.exists(dp) and os.path.getmtime(dp) > os.path.getmtime(key_path(k)):
         d = np.load(dp)
     else:
         d = depth_map(src); np.save(dp, d)

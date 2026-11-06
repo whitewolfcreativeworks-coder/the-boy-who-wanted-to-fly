@@ -71,7 +71,7 @@ def writer(path):
 
 
 def pick(*ids):
-    return next(k for k in ids if os.path.exists(os.path.join(A.KEYS, k + ".png")))
+    return next(k for k in ids if A.key_path(k))
 
 
 def title(dur=9.0):
