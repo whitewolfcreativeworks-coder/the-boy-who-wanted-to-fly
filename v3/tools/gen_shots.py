@@ -13,6 +13,7 @@ ap.add_argument("sd"); ap.add_argument("models"); ap.add_argument("out")
 ap.add_argument("--p", type=int, default=2, help="generate priorities up to this number")
 ap.add_argument("--only", default="")
 ap.add_argument("--seed", default="1")
+ap.add_argument("--max", type=int, default=0, help="stop after generating this many images (0 = all)")
 a = ap.parse_args()
 os.makedirs(a.out, exist_ok=True)
 repo = os.path.abspath(os.path.join(HERE, "..", ".."))
@@ -20,10 +21,13 @@ only = set(filter(None, a.only.split(",")))
 
 queue = sorted((s for s in SHOTS if s["p"] <= a.p and (not only or s["id"] in only)),
                key=lambda s: (s["p"], s["id"]))
+done = 0
 for s in queue:
     out = os.path.join(a.out, f"{s['id']}.png")
     if os.path.exists(out):
         continue
+    if a.max and done >= a.max:
+        break
     if "reuse" in s:
         shutil.copy(os.path.join(repo, s["reuse"]), out)
         print(f"{s['id']}: reused {s['reuse']}", flush=True)
@@ -38,5 +42,6 @@ for s in queue:
     if r.returncode == 0 and os.path.exists(out + ".tmp.png"):
         os.replace(out + ".tmp.png", out)
         print(f"{s['id']}: ok {time.time() - t:.0f}s", flush=True)
+        done += 1
     else:
         print(f"{s['id']}: FAILED rc={r.returncode}\n{r.stderr[-800:]}", flush=True)
