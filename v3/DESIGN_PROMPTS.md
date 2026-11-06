@@ -59,5 +59,5 @@ Describe styles generically; never name a studio, film or character in a prompt.
 2. Generate 20–30 consistent images of him (angles, expressions, outfits: day clothes, pajamas, pajamas with cape).
 3. Train the Orion LoRA.
 4. Do the same for Mom, Dad and the truck driver.
-5. Generate one key frame per shot, following `v2/docs/PRODUCTION_PLAN.md`; the shot list carries over.
+5. Generate one key frame per shot, following `v2/docs/PRODUCTION_PLAN.md` (on branch `version-2-cinematic`); the shot list carries over.
 6. Animate each shot with Wan 2.2 image-to-video, then score and assemble.
