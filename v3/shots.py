@@ -167,7 +167,7 @@ SHOTS = [
         f"{PAJAMAS}, her long hair falling near his face, while {DAD} stands beside the bed smiling warmly, "
         "soft warm lamp light.")),
     dict(id="s09c", p=2, beats=["sleep"], prompt=P(
-        f"Close-up of {ORION} asleep in bed, snuggled deep in a plush quilt, a content smile on his face, "
+        f"Close-up of {ORION}, {PAJAMAS}, asleep in bed, snuggled deep in a plush quilt, a content smile on his face, "
         "soft silver moonlight, peaceful.", dream=True)),
     # ---- 10  Running Through Honey
     dict(id="s10a", p=1, beats=["wind", "tap"], prompt=P(
