@@ -35,6 +35,17 @@ def scene_timing(sid, manifest):
     return c
 
 
+def frame_count(sid, dur):
+    """Frames for scene `sid`, taken from the soundtrack's cumulative offsets so the
+    picture never drifts from the audio (no per-scene rounding error)."""
+    import json
+    p = os.path.join(ROOT, "build", "audio", "offsets.json")
+    if os.path.exists(p):
+        o = json.load(open(p)); nxt = o.get(str(sid + 1), o["total"])
+        return int(round(nxt * FPS)) - int(round(o[str(sid)] * FPS))
+    return int(round(dur * FPS))
+
+
 def at_time(ctx, spec):
     tag, _, frac = spec.partition("+")
     b = ctx.b(tag)
@@ -269,7 +280,7 @@ def render_scene(sid, manifest, out):
     if not shots:
         print(f"scene {sid}: no key images yet"); return False
     cache = {k: load_shot(k) for k, *_ in shots}
-    n = int(round(ctx.dur * FPS))
+    n = frame_count(sid, ctx.dur)
     os.makedirs(os.path.dirname(out), exist_ok=True)
     p = subprocess.Popen(["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "bgr24",
                           "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-", "-c:v", "libx264", "-preset", "veryfast",
