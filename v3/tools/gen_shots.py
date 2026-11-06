@@ -36,7 +36,7 @@ for s in queue:
            "--vae", os.path.join(a.models, "ae.safetensors"),
            "--llm", os.path.join(a.models, "Qwen3-4B-Instruct-2507-Q4_K_M.gguf"),
            "-p", s["prompt"], "--cfg-scale", "1.0", "--steps", "8", "-W", "1024", "-H", "576",
-           "-s", a.seed, "-t", "2", "--vae-tiling", "--mmap", "-o", out + ".tmp.png"]
+           "-s", str(s.get("seed", a.seed)), "-t", "2", "--vae-tiling", "--mmap", "-o", out + ".tmp.png"]
     t = time.time()
     r = subprocess.run(cmd, capture_output=True, text=True)
     if r.returncode == 0 and os.path.exists(out + ".tmp.png"):

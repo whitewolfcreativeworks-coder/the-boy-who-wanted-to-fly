@@ -28,6 +28,14 @@ HOUSE = ("a cozy two-story pale-yellow house with white trim, a front porch and 
 YARD = "the front lawn of " + HOUSE + ", fallen red, orange and yellow maple leaves on the grass"
 
 
+ENV_STYLE = ("background environment art from a modern 3D animated feature film, empty scene, scenery only, "
+             "rich cinematic lighting, detailed textures, high detail")
+
+
+def ENV(text):
+    return f"{ENV_STYLE}. {text}"
+
+
 def P(text, dream=False):
     return f"Film still, {STYLE}{', ' + DREAM if dream else ''}. {text}"
 
@@ -171,10 +179,10 @@ SHOTS = [
         f"Close-up of {ORION}, {PAJAMAS}, asleep in bed, snuggled deep in a plush quilt, a content smile on his face, "
         "soft silver moonlight, peaceful.", dream=True)),
     # ---- 10  Running Through Honey
-    dict(id="s10a", p=1, beats=["wind", "tap"], prompt=P(
-        "Close-up seen from outside a house at night: a bare twisting maple branch with a few last red leaves "
-        "scrapes and taps against a dark glass windowpane, warm golden night-light glow behind lace curtains, "
-        "a full moon, autumn leaves whirling in the howling wind, moody and magical.")),
+    dict(id="s10a", p=1, seed=7, beats=["wind", "tap"], prompt=ENV(
+        "Close-up of the outside of a house at night: a bare twisting maple branch with a few last red leaves "
+        "taps against a glass windowpane, warm golden glow behind lace curtains, a full moon, autumn leaves "
+        "whirling in the howling wind, moody and magical.")),
     dict(id="s10b", p=1, beats=["dreamrun", "honey"], prompt=P(
         f"A dream: {ORION}, {PAJAMAS}, tries to run through a strange golden landscape flooded with thick "
         "glistening amber honey up to his knees, straining with every slow step, arms flapping, honey "
