@@ -163,9 +163,10 @@ SHOTS = [
         f"{ORION}, {PAJAMAS}, lies in his cozy bed in the corner of his bedroom at night with a thick plush "
         "quilt pulled up to his chin, eyes open, wondering, soft lamp light and moonlight from the window.")),
     dict(id="s09b", p=1, beats=["kiss", "ask", "dad"], prompt=P(
-        f"A cozy child's bedroom at night: {MOM} leans down to kiss {ORION} on the forehead as he lies in bed "
-        f"{PAJAMAS}, her long hair falling near his face, while {DAD} stands beside the bed smiling warmly, "
-        "soft warm lamp light.")),
+        f"A cozy child's bedroom at night: {ORION}, {PAJAMAS}, lies in bed under a quilt with his eyes closed "
+        f"and a happy smile while {MOM} bends over him and gives him a gentle goodnight kiss high on the top "
+        "of his forehead, at his hairline, her long hair falling forward; "
+        f"{DAD} stands beside the bed smiling warmly. Tender, wholesome family moment, soft warm lamp light.")),
     dict(id="s09c", p=2, beats=["sleep"], prompt=P(
         f"Close-up of {ORION}, {PAJAMAS}, asleep in bed, snuggled deep in a plush quilt, a content smile on his face, "
         "soft silver moonlight, peaceful.", dream=True)),
