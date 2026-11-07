@@ -179,8 +179,8 @@ SHOTS = [
         "of his forehead, at his hairline, her long hair falling forward; "
         f"{DAD} stands beside the bed smiling warmly. Tender, wholesome family moment, soft warm lamp light.")),
     dict(id="s09c", p=2, beats=["sleep"], prompt=P(
-        f"Close-up of {ORION}, {PAJAMAS}, asleep in bed, snuggled deep in a plush quilt, a content smile on his face, "
-        "soft silver moonlight, peaceful.", dream=True)),
+        f"Close-up of {ORION}, {PAJAMAS}, fast asleep with his eyes gently closed, snuggled deep in a plush "
+        "quilt, a content smile on his sleeping face, soft silver moonlight, peaceful.", dream=True)),
     # ---- 10  Running Through Honey
     dict(id="s10a", p=1, seed=7, beats=["wind", "tap"], prompt=ENV(
         "Close-up of the outside of a house at night: a bare twisting maple branch with a few last red leaves "
