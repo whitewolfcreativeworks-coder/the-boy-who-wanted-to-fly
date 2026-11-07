@@ -276,9 +276,79 @@ def finish(frame):
 
 
 # ------------------------------------------------------------------ render
+CLIPS = os.environ.get("V3_CLIPS", os.path.join(BUILD, "clips_repo", "clips"))
+CLIP_FPS = 16
+
+
+def clip_paths(k):
+    """Motion clips for shot k (k_0.mp4, k_1.mp4, ...), if the motion pass has produced them."""
+    out, j = [], 0
+    while os.path.exists(os.path.join(CLIPS, f"{k}_{j}.mp4")):
+        out.append(os.path.join(CLIPS, f"{k}_{j}.mp4")); j += 1
+    return out
+
+
+def load_clip(paths):
+    """Frames of the chained segments (uint8 BGR at clip resolution); the first frame of each
+    continuation segment repeats the previous segment's last frame, so it is dropped."""
+    frames = []
+    for j, p in enumerate(paths):
+        cap = cv2.VideoCapture(p); seg = []
+        while True:
+            ok, fr = cap.read()
+            if not ok:
+                break
+            seg.append(fr)
+        cap.release()
+        frames += seg[1:] if j else seg
+    return frames
+
+
+class ShotCache:
+    """Loads a shot's still (image + depth) or its motion clip on first use; keeps only the
+    shots around the current one so long clips don't exhaust memory."""
+    def __init__(self):
+        self.d = {}
+
+    def __getitem__(self, k):
+        if k not in self.d:
+            cp = clip_paths(k)
+            self.d[k] = ("clip", load_clip(cp)) if cp else ("still",) + load_shot(k)
+        return self.d[k]
+
+    def keep(self, keys):
+        for k in list(self.d):
+            if k not in keys:
+                del self.d[k]
+
+
+def clip_frame(frames, st, en, t):
+    """Play the clip across the shot: real speed when it is long enough, otherwise slowed to at
+    most 0.7x, then hold the last frame with a slow push-in. 16 fps maps to 24 fps by nearest frame."""
+    n = len(frames); lc = n / CLIP_FPS; dur = max(en - st, 1e-3)
+    rate = 1.0 if lc >= dur else max(0.7, lc / dur)
+    pos = (t - st) * CLIP_FPS * rate
+    if pos >= n - 1:
+        f = frames[-1].astype(np.float32) / 255
+        hold = (pos - (n - 1)) / (CLIP_FPS * rate)
+        z = 1 + 0.012 * hold
+        f = cv2.resize(f, None, fx=z, fy=z, interpolation=cv2.INTER_LINEAR)
+        y0 = (f.shape[0] - frames[-1].shape[0]) // 2; x0 = (f.shape[1] - frames[-1].shape[1]) // 2
+        f = f[y0:y0 + frames[-1].shape[0], x0:x0 + frames[-1].shape[1]]
+    else:
+        f = frames[min(int(round(pos)), n - 1)].astype(np.float32) / 255   # nearest frame: crisp, no ghosting
+    return cv2.resize(f, (W, H), interpolation=cv2.INTER_CUBIC)
+
+
+GENTLE_FX = {"glow", "sparkle", "motes"}      # overlays that still suit real motion clips
+
+
 def shot_frame(k, cache, cam, fx, st, en, t, seed):
-    img, d = cache[k]
+    c = cache[k]
     u = (t - st) / max(en - st, 1e-3)
+    if c[0] == "clip":
+        return apply_fx(clip_frame(c[1], st, en, t), [f for f in fx if f in GENTLE_FX], t - st, u, seed)
+    _, img, d = c
     f = warp(img, d, cam, u, t)
     return apply_fx(f, fx, t - st, u, seed)
 
@@ -288,7 +358,7 @@ def render_scene(sid, manifest, out):
     shots = scene_shots(sid, ctx)
     if not shots:
         print(f"scene {sid}: no key images yet"); return False
-    cache = {k: load_shot(k) for k, *_ in shots}
+    cache = ShotCache()
     n = frame_count(sid, ctx.dur)
     os.makedirs(os.path.dirname(out), exist_ok=True)
     p = subprocess.Popen(["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "bgr24",
@@ -298,6 +368,7 @@ def render_scene(sid, manifest, out):
         t = fi / FPS
         i = max(j for j, s in enumerate(shots) if s[1] <= t + 1e-6)
         k, st, en, cam, fx = shots[i]
+        cache.keep({shots[j][0] for j in range(max(0, i - 1), min(len(shots), i + 2))})
         frame = shot_frame(k, cache, cam, fx, st, en + XFADE, t, sid * 100 + i)
         if i + 1 < len(shots) and t > en - XFADE / 2:          # dissolve into the next shot
             k2, st2, en2, cam2, fx2 = shots[i + 1]
@@ -328,7 +399,7 @@ def main():
         k, u = a.still[0], float(a.still[1])
         sid = int(k[1:3]); ctx = scene_timing(sid, man)
         row = next(s for s in scene_shots(sid, ctx) if s[0] == k)
-        cache = {k: load_shot(k)}
+        cache = ShotCache()
         t = row[1] + u * (row[2] - row[1])
         f = finish(shot_frame(k, cache, row[3], row[4], row[1], row[2], t, 1))
         out = os.path.join(BUILD, "stills", f"{k}_{u:.2f}.jpg"); os.makedirs(os.path.dirname(out), exist_ok=True)

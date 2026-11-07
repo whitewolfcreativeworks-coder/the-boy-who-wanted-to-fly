@@ -43,3 +43,20 @@ Set `V3_DEPTH_MODEL` if the depth model isn't at `~/models/depth_anything_v2_sma
 | `keyframes/` | The generated key images |
 | `review/` | Design rounds approved by the author |
 | `LICENSES.md` | Models, software and items to review before release |
+
+## Motion pass (real character animation, needs a rented GPU)
+`motion/` turns every approved key image into moving footage with **Wan 2.2 I2V-A14B** (Apache-2.0) and the **Wan2.2-Lightning** 4-step LoRA (Apache-2.0), on Hugging Face Jobs (billed per minute, prepaid credits).
+- `motion_prompts.py` says what moves in each shot. Long shots are split into chained 5-second segments (105 in all), each one starting from the last frame of the one before.
+- `motion/motion_job.py` runs on the GPU and uploads each clip as soon as it is done, so the job can be resumed.
+- `motion/motion.py` is the controller: `plan`, `prepare`, `submit`, `watch`, `fetch`, `cancel`.
+- `animate.py` plays a shot's clips wherever they exist (slowed to at most 0.7× if a shot is longer, then a hold), and uses the 2.5D still everywhere else. The timing is unchanged, so the narration, music and subtitles still line up.
+
+```bash
+export HF_TOKEN=hf_...                                   # write token; never commit it
+python3 v3/motion/motion.py prepare USER/boy-who-wanted-to-fly-motion
+python3 v3/motion/motion.py submit  USER/boy-who-wanted-to-fly-motion --only s02a --max 1 --timeout 1h   # test shot
+python3 v3/motion/motion.py submit  USER/boy-who-wanted-to-fly-motion --timeout 6h                      # everything
+python3 v3/motion/motion.py fetch   USER/boy-who-wanted-to-fly-motion
+python3 v3/animate.py && python3 v3/titles.py && python3 v3/assemble.py
+```
+Estimated cost for all 105 segments on an A100 is about $12 (`motion.py plan`). The test shot gives the real per-clip time.

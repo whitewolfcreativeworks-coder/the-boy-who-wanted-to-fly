@@ -76,7 +76,7 @@ def pick(*ids):
 
 def title(dur=9.0):
     n = A.frame_count(0, dur)
-    k = pick("s01a", "s02a"); cache = {k: A.load_shot(k)}
+    k = pick("s01a", "s02a"); cache = A.ShotCache()
     lay, sh = text_layer([("title", "The Boy Who Wanted to Fly"), ("gap", ""), ("head", "Story by"), ("name", "Jason Whitewolf")])
     p = writer(os.path.join(A.BUILD, "scenes", "s00.mp4"))
     for fi in range(n):
@@ -92,7 +92,7 @@ def title(dur=9.0):
 
 def credits(dur=26.0):
     n = A.frame_count(18, dur)
-    k = pick("s15e", "s17a", "s15d"); cache = {k: A.load_shot(k)}
+    k = pick("s15e", "s17a", "s15d"); cache = A.ShotCache()
     lay, sh = text_layer(CREDITS)
     p = writer(os.path.join(A.BUILD, "scenes", "s18.mp4"))
     y_last = lay.shape[0] - 100 - STYLE["name"][3]          # where "Sweet dreams." sits in the layer
