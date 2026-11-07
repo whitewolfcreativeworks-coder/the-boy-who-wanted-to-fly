@@ -163,7 +163,8 @@ SHOTS = [
         f"{DAY_CLOTHES}, who sits in a pile of leaves looking up at him with wide hopeful eyes, a green garbage "
         "truck parked on the street behind them.")),
     dict(id="s08d", p=2, beats=["practice", "never"], prompt=P(
-        f"Close-up of {DRIVER} smiling warmly with crinkled kind eyes, giving a thumbs-up, golden autumn light.")),
+        f"Close-up of {DRIVER} smiling warmly with crinkled kind eyes, giving a thumbs-up, his bright green "
+        "garbage truck behind him on a leafy autumn street, golden autumn light.")),
     dict(id="s08e", p=1, beats=["leave", "ponder", "promise"], prompt=P(
         f"{ORION}, {DAY_CLOTHES}, lies on his back in a big pile of autumn leaves gazing thoughtfully up at "
         "the sky with a quiet determined smile, a green garbage truck driving away down the street in the "
